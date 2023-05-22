@@ -3,9 +3,15 @@ const app = express();
 
 const { Configuration, OpenAIApi } = require("openai");
 
+// set the port
+const port = process.env.PORT || 3000;
+
 // setup .env variables using dotenv
 require('dotenv').config();
 
+// Setup cors policy for dev environment
+const cors = require('cors');
+app.use(cors({ origin: `http://localhost:${port}`, credentials: true }))
 
 // middleware to parse the body
 app.use(express.json());
@@ -43,11 +49,6 @@ app.post('/calling-grammar-editor', async (req, res) => {
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
-
-
-
-
-const port = process.env.PORT || 3000;
 
 // Start the server and give the host and port
 // give the path to the server
